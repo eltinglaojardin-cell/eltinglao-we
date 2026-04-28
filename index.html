@@ -1,1 +1,1535 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Tinglao 🍽️ · Benicàssim</title>
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🍽️&lt;/text&gt;&lt;/svg&gt;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Raleway:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+:root {
+  --oscuro:   #2E2D23;
+  --verde:    #636838;
+  --teja:     #8D4829;
+  --beige:    #D4C7B4;
+  --dorado:   #CE8A39;
+  --cream:    #F5F0E6;
+  --dark-bg:  #1C1B14;
+  --card-bg:  rgba(212,199,180,0.06);
+  --green-wa: #25D366;
+}
 
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Raleway',sans-serif; background:var(--dark-bg); color:var(--cream); overflow-x:hidden; }
+
+/* ═══ NAV ═══ */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:200;
+  padding:1rem 2rem;
+  display:flex; align-items:center; justify-content:space-between;
+  background:linear-gradient(to bottom, rgba(28,27,20,0.95), transparent);
+  backdrop-filter:blur(6px);
+  transition:background 0.3s;
+}
+nav.scrolled { background:rgba(28,27,20,0.98); box-shadow:0 1px 0 rgba(206,138,57,0.2); }
+.nav-logo img { height:36px; display:block; }
+.nav-tel { font-size:0.75rem; letter-spacing:0.12em; color:var(--beige); text-decoration:none; transition:color 0.2s; }
+.nav-tel:hover { color:var(--dorado); }
+.nav-right { display:flex; align-items:center; gap:1.2rem; }
+.lang-selector { position:relative; }
+.lang-active {
+  font-family:'Raleway',sans-serif; font-size:0.65rem; font-weight:700;
+  letter-spacing:0.15em; text-transform:uppercase; cursor:pointer;
+  background:transparent; border:1px solid rgba(212,199,180,0.3);
+  color:var(--beige); padding:0.35rem 0.75rem; border-radius:2px;
+  transition:all 0.25s ease; display:flex; align-items:center; gap:0.35rem;
+}
+.lang-active:hover { border-color:var(--dorado); color:var(--dorado); }
+.lang-menu {
+  display:none; position:absolute; top:calc(100% + 6px); right:0;
+  background:var(--oscuro); border:1px solid rgba(206,138,57,0.25);
+  border-radius:2px; min-width:90px; z-index:300; overflow:hidden;
+}
+.lang-menu.open { display:block; }
+.lang-menu button {
+  display:block; width:100%; text-align:left; padding:0.55rem 0.9rem;
+  font-family:'Raleway',sans-serif; font-size:0.63rem; font-weight:600;
+  letter-spacing:0.12em; background:transparent; border:none; cursor:pointer;
+  color:var(--beige); transition:background 0.18s, color 0.18s;
+}
+.lang-menu button:hover { background:rgba(206,138,57,0.12); color:var(--dorado); }
+
+/* ═══ HERO ═══ */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; text-align:center; padding:2rem; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background-image:url('img/hero.jpg');
+  background-size:cover; background-position:center;
+}
+.hero-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(160deg, rgba(28,27,20,0.78) 0%, rgba(46,45,35,0.55) 50%, rgba(28,27,20,0.85) 100%);
+}
+.hero-overlay2 {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at center bottom, rgba(206,138,57,0.06) 0%, transparent 65%);
+}
+.hero-content { position:relative; z-index:2; }
+.hero-badge {
+  font-size:0.65rem; letter-spacing:0.5em; text-transform:uppercase;
+  color:var(--dorado); margin-bottom:2rem;
+  opacity:0; animation:fadeUp 0.8s 0.3s ease forwards;
+}
+.hero-logo-img {
+  width:min(160px, 30vw); margin-bottom:2rem;
+  opacity:0; animation:fadeUp 1s 0.5s ease forwards;
+  filter:drop-shadow(0 4px 24px rgba(0,0,0,0.5));
+}
+.hero-tagline {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;
+  font-size:clamp(1rem, 2.5vw, 1.35rem); letter-spacing:0.2em;
+  color:var(--beige); margin-bottom:3rem;
+  opacity:0; animation:fadeUp 0.9s 0.9s ease forwards;
+}
+.hero-cta {
+  display:flex; gap:0.9rem; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp 0.9s 1.1s ease forwards;
+}
+.scroll-hint {
+  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  opacity:0; animation:fadeUp 1s 1.8s ease forwards;
+}
+.scroll-hint span { font-size:0.58rem; letter-spacing:0.4em; text-transform:uppercase; color:var(--beige); opacity:0.5; }
+.scroll-line { width:1px; height:40px; background:linear-gradient(to bottom, var(--dorado), transparent); animation:pulse 2s ease infinite; }
+
+/* ═══ BUTTONS ═══ */
+.btn {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  padding:0.85rem 2rem; border-radius:1px;
+  font-family:'Raleway',sans-serif; font-weight:600;
+  font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+  text-decoration:none; transition:all 0.3s ease; cursor:pointer; border:none;
+}
+.btn-gold   { background:var(--dorado); color:var(--oscuro); }
+.btn-gold:hover  { background:#e09d47; transform:translateY(-2px); box-shadow:0 8px 24px rgba(206,138,57,0.35); }
+.btn-outline { background:transparent; color:var(--cream); border:1px solid rgba(212,199,180,0.35); }
+.btn-outline:hover { border-color:var(--dorado); color:var(--dorado); transform:translateY(-2px); }
+.btn-verde  { background:var(--verde); color:var(--cream); }
+.btn-verde:hover { background:#747d3e; transform:translateY(-2px); box-shadow:0 8px 24px rgba(99,104,56,0.4); }
+.btn-teja   { background:var(--teja); color:var(--cream); }
+.btn-teja:hover  { background:#a0552f; transform:translateY(-2px); box-shadow:0 8px 24px rgba(141,72,41,0.4); }
+.btn-wa     { background:var(--green-wa); color:#fff; }
+.btn-wa:hover    { background:#1dbd57; transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,211,102,0.3); }
+
+/* ═══ SECTION COMMON ═══ */
+.section-label {
+  font-size:0.62rem; letter-spacing:0.55em; text-transform:uppercase;
+  color:var(--dorado); margin-bottom:0.9rem; display:block;
+}
+.section-title {
+  font-family:'Cormorant Garamond',serif; font-weight:400;
+  font-size:clamp(2rem,5vw,3.2rem); line-height:1.15;
+  margin-bottom:1.2rem; color:var(--cream);
+}
+.section-title em { font-style:italic; color:var(--dorado); }
+.section-desc {
+  font-size:0.88rem; color:var(--beige); font-weight:300; line-height:1.85;
+  max-width:540px;
+}
+.divider {
+  width:60px; height:1px;
+  background:linear-gradient(to right, transparent, var(--dorado), transparent);
+  margin:2rem auto;
+}
+
+/* ═══ CARTA SECTION ═══ */
+.carta-section { background:var(--dark-bg); }
+.carta-inner { max-width:1200px; margin:0 auto; padding:6rem 2rem; }
+
+/* tabs */
+.carta-tabs {
+  display:flex; gap:0; flex-wrap:wrap;
+  border-bottom:1px solid rgba(206,138,57,0.2);
+  margin:2.5rem 0 0;
+}
+.tab-btn {
+  padding:0.8rem 1.8rem; background:transparent;
+  border:none; border-bottom:2px solid transparent;
+  font-family:'Raleway',sans-serif; font-weight:500;
+  font-size:0.72rem; letter-spacing:0.18em; text-transform:uppercase;
+  color:var(--beige); cursor:pointer; transition:all 0.25s;
+  margin-bottom:-1px;
+}
+.tab-btn:hover { color:var(--dorado); }
+.tab-btn.active { color:var(--dorado); border-bottom-color:var(--dorado); }
+
+/* carta panel */
+.carta-panel { display:none; padding:2.5rem 0; }
+.carta-panel.active { display:block; }
+
+/* departamentos */
+.dept-title {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1.5rem; font-weight:400; color:var(--dorado);
+  margin:2.5rem 0 1rem; padding-bottom:0.5rem;
+  border-bottom:1px solid rgba(206,138,57,0.18);
+}
+.dept-title:first-child { margin-top:0; }
+
+/* plato */
+.plato {
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:1rem; padding:0.9rem 0;
+  border-bottom:1px solid rgba(212,199,180,0.08);
+  transition:background 0.2s;
+}
+.plato:hover { background:rgba(206,138,57,0.04); padding-left:0.4rem; }
+.plato-left { flex:1; }
+.plato-nombre {
+  font-family:'Cormorant Garamond',serif; font-weight:400;
+  font-size:1.05rem; color:var(--cream); margin-bottom:0.15rem;
+}
+.plato-desc {
+  font-size:0.78rem; color:var(--beige); font-weight:300;
+  line-height:1.6; font-style:italic;
+}
+.plato-alergenos {
+  display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.4rem;
+}
+.alergeno {
+  font-size:0.6rem; letter-spacing:0.08em; text-transform:uppercase;
+  padding:0.15rem 0.5rem; border-radius:1px;
+  background:rgba(99,104,56,0.15); color:var(--verde);
+  border:1px solid rgba(99,104,56,0.3);
+}
+.plato-precio {
+  font-family:'Cormorant Garamond',serif; font-weight:600;
+  font-size:1.1rem; color:var(--dorado); white-space:nowrap;
+  flex-shrink:0;
+}
+
+/* bebidas grid */
+.bebida-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; margin-top:1rem; }
+.bebida-card {
+  background:var(--card-bg); padding:1.5rem;
+  border:1px solid rgba(206,138,57,0.1);
+  transition:all 0.3s ease;
+}
+.bebida-card:hover { background:rgba(206,138,57,0.06); border-color:rgba(206,138,57,0.25); }
+.bebida-nombre { font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400; color:var(--cream); margin-bottom:0.25rem; }
+.bebida-desc { font-size:0.78rem; color:var(--beige); font-weight:300; font-style:italic; line-height:1.6; }
+.bebida-precio { font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--dorado); font-weight:600; margin-top:0.5rem; }
+
+/* ═══ ESPACIOS ═══ */
+.espacios-section { background:rgba(46,45,35,0.4); border-top:1px solid rgba(206,138,57,0.1); border-bottom:1px solid rgba(206,138,57,0.1); }
+.espacios-inner { max-width:1200px; margin:0 auto; padding:6rem 2rem; text-align:center; }
+.espacios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; margin-top:3rem; background:rgba(206,138,57,0.1); }
+.espacio-card {
+  background:var(--dark-bg); padding:2.5rem 1.5rem; text-align:center;
+  display:flex; flex-direction:column; align-items:center; gap:1rem;
+  transition:background 0.3s;
+}
+.espacio-card:hover { background:rgba(99,104,56,0.12); }
+.espacio-logo { height:90px; object-fit:contain; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+.espacio-desc { font-size:0.8rem; color:var(--beige); font-weight:300; line-height:1.7; }
+
+/* ═══ EVENTOS ═══ */
+.eventos-section { background:var(--dark-bg); }
+.eventos-inner { max-width:1200px; margin:0 auto; padding:6rem 2rem; }
+.eventos-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.5px; margin-top:3rem; background:rgba(206,138,57,0.08); }
+.evento-card {
+  background:var(--dark-bg); padding:2.5rem 2rem;
+  border:1px solid rgba(206,138,57,0.1);
+  transition:all 0.35s; position:relative; overflow:hidden;
+}
+.evento-card::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background:var(--teja); transform:scaleX(0); transform-origin:left; transition:transform 0.4s;
+}
+.evento-card:hover { background:rgba(141,72,41,0.06); transform:translateY(-4px); }
+.evento-card:hover::after { transform:scaleX(1); }
+.evento-icon { font-size:2rem; margin-bottom:1rem; display:block; }
+.evento-card h3 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:400; color:var(--cream); margin-bottom:0.7rem; }
+.evento-card p { font-size:0.83rem; color:var(--beige); font-weight:300; line-height:1.75; }
+.eventos-cta { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:3rem; }
+
+/* ═══ RESERVAS ═══ */
+.btn-cover {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:var(--verde); color:var(--beige);
+  border:2px solid var(--verde); padding:0.9rem 2rem;
+  font-family:'Raleway',sans-serif; font-size:0.72rem;
+  font-weight:700; letter-spacing:0.18em; text-transform:uppercase;
+  text-decoration:none; border-radius:2px; transition:all 0.25s ease;
+}
+.btn-cover:hover { background:transparent; color:var(--verde); }
+.reservas-section {
+  background:linear-gradient(135deg, var(--oscuro) 0%, #1e1d16 50%, var(--oscuro) 100%);
+  border-top:1px solid rgba(206,138,57,0.15); border-bottom:1px solid rgba(206,138,57,0.15);
+}
+.reservas-inner { max-width:760px; margin:0 auto; padding:6rem 2rem; text-align:center; }
+.reservas-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin:2.5rem 0; }
+.contact-strip {
+  display:flex; gap:2rem; justify-content:center; flex-wrap:wrap;
+  padding-top:2rem; border-top:1px solid rgba(206,138,57,0.12);
+}
+.contact-item { display:flex; align-items:center; gap:0.5rem; font-size:0.82rem; color:var(--beige); text-decoration:none; transition:color 0.2s; }
+.contact-item:hover { color:var(--dorado); }
+
+/* ═══ QR ═══ */
+.qr-section { background:#0f0e0a; border-top:1px solid rgba(206,138,57,0.12); }
+.qr-inner {
+  max-width:900px; margin:0 auto; padding:5rem 2rem;
+  display:grid; grid-template-columns:1fr auto; gap:4rem; align-items:center;
+}
+@media(max-width:620px){ .qr-inner{ grid-template-columns:1fr; text-align:center; } .qr-box{ margin:0 auto; } }
+.qr-features { list-style:none; display:flex; flex-direction:column; gap:0.5rem; margin:1.2rem 0 2rem; }
+.qr-features li { font-size:0.82rem; color:var(--cream); font-weight:300; display:flex; align-items:center; gap:0.5rem; }
+.qr-features li::before { content:'✦'; color:var(--dorado); font-size:0.55rem; flex-shrink:0; }
+.qr-box {
+  background:var(--cream); padding:1.2rem; border-radius:3px;
+  display:flex; flex-direction:column; align-items:center; gap:0.7rem;
+  width:210px; flex-shrink:0; box-shadow:0 0 50px rgba(206,138,57,0.15);
+}
+.qr-box img { width:170px; height:170px; display:block; border-radius:2px; }
+.qr-box-label { font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--oscuro); font-weight:700; text-align:center; line-height:1.6; }
+
+/* ═══ FOOTER ═══ */
+footer {
+  background:#0a0906; border-top:1px solid rgba(206,138,57,0.12);
+  padding:3.5rem 2rem; text-align:center;
+}
+.footer-logo { height:60px; margin-bottom:1.5rem; display:block; margin-left:auto; margin-right:auto; }
+.footer-socials { display:flex; gap:1.2rem; justify-content:center; margin:1.5rem 0; }
+.footer-socials a {
+  width:36px; height:36px; border:1px solid rgba(206,138,57,0.25); border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--beige); text-decoration:none; font-size:0.8rem; font-weight:600; transition:all 0.25s;
+}
+.footer-socials a:hover { border-color:var(--dorado); color:var(--dorado); background:rgba(206,138,57,0.08); }
+.footer-info { font-size:0.78rem; color:rgba(212,199,180,0.5); line-height:2; }
+.footer-info a { color:var(--beige); text-decoration:none; transition:color 0.2s; }
+.footer-info a:hover { color:var(--dorado); }
+
+/* ═══ ANIMATIONS ═══ */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media(max-width:768px){
+  nav{ padding:0.9rem 1rem; }
+  .hero-cta, .reservas-btns, .eventos-cta{ flex-direction:column; align-items:center; }
+  .btn{ width:100%; max-width:300px; justify-content:center; }
+  .plato{ flex-direction:column; gap:0.3rem; }
+  .plato-precio{ align-self:flex-end; }
+  .carta-tabs{ overflow-x:auto; flex-wrap:nowrap; }
+}
+
+
+/* Slow life overlay on partner photo */
+.partner-visual { position:relative; }
+.partner-visual-overlay {
+  position:absolute;
+  bottom:0; left:0; right:0;
+  background:linear-gradient(to top, rgba(10,14,8,0.85) 0%, transparent 100%);
+  padding:2.5rem 2rem 1.8rem;
+  z-index:2;
+  pointer-events:none;
+}
+.partner-slowlife {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.3rem;
+  font-weight:300;
+  color:rgba(212,199,180,0.9);
+  letter-spacing:0.12em;
+  margin:0;
+  text-align:center;
+}
+@media(max-width:768px){
+  .partner-visual-overlay { padding:1.5rem 1.2rem 1.2rem; }
+  .partner-slowlife { font-size:1.05rem; }
+}
+
+/* ── CARACOL AZUL PARTNER SECTION ─────────────────────────────────────────── */
+.partner-section {
+  background: #1a1f12;
+  overflow: hidden;
+  position: relative;
+}
+.partner-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 560px;
+  align-items: stretch;
+}
+.partner-visual {
+  position: relative;
+  overflow: hidden;
+  min-height: 460px;
+}
+.partner-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  filter: brightness(0.88) saturate(1.1);
+  transition: transform 0.8s ease;
+}
+.partner-section:hover .partner-visual img {
+  transform: scale(1.04);
+}
+.partner-visual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 55%, #1a1f12 100%);
+  pointer-events: none;
+}
+.partner-copy {
+  padding: 4rem 3.5rem 4rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+.partner-eyebrow {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--dorado);
+  margin-bottom: 1.2rem;
+}
+.partner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem;
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cream);
+  margin-bottom: 1.4rem;
+}
+.partner-title em {
+  font-style: italic;
+  color: var(--dorado);
+}
+.partner-desc {
+  font-size: 0.82rem;
+  font-weight: 300;
+  line-height: 1.85;
+  color: rgba(212,199,180,0.75);
+  margin-bottom: 0.9rem;
+  max-width: 380px;
+}
+.partner-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+.partner-tag {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: rgba(201,168,76,0.8);
+  border-radius: 1px;
+}
+.partner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--oscuro);
+  background: var(--dorado);
+  padding: 0.85rem 2rem;
+  text-decoration: none;
+  transition: all 0.25s;
+  width: fit-content;
+}
+.partner-cta:hover {
+  background: #d4b050;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(201,168,76,0.25);
+}
+.partner-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  background: linear-gradient(135deg, #1e2a14 0%, #2c3d1e 40%, #1a2810 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+.partner-placeholder-icon {
+  font-size: 5rem;
+  opacity: 0.4;
+}
+.partner-placeholder-text {
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.4);
+}
+@media (max-width: 768px) {
+  .partner-inner {
+    grid-template-columns: 1fr;
+  }
+  .partner-visual {
+    min-height: 280px;
+  }
+  .partner-visual::after {
+    background: linear-gradient(180deg, transparent 55%, #1a1f12 100%);
+  }
+  .partner-copy {
+    padding: 2.5rem 1.8rem;
+  }
+  .partner-title { font-size: 2.2rem; }
+}
+
+/* ── SPACES GALLERY ─────────────────────────────────────────────────────────── */
+.spaces-section { background:var(--oscuro); padding:5rem 0 0; }
+.spaces-inner { max-width:1200px; margin:0 auto; padding:0 1.5rem; text-align:center; }
+.spaces-tabs {
+  display:flex; justify-content:center; gap:0; margin:2.5rem 0 0;
+  border-bottom:1px solid rgba(201,168,76,0.2);
+}
+.spaces-tab {
+  padding:0.85rem 2.2rem;
+  background:transparent; border:none;
+  border-bottom:2px solid transparent;
+  font-family:'Raleway',sans-serif; font-size:0.65rem;
+  font-weight:700; letter-spacing:0.22em; text-transform:uppercase;
+  color:rgba(212,199,180,0.5); cursor:pointer; transition:all 0.25s;
+  margin-bottom:-1px;
+}
+.spaces-tab:hover { color:var(--dorado); }
+.spaces-tab.active { color:var(--dorado); border-bottom-color:var(--dorado); }
+.spaces-gallery { display:none; }
+.spaces-gallery.active { display:block; }
+.spaces-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:320px 220px;
+  gap:4px;
+  margin-top:4px;
+}
+.spaces-grid .sg-main { grid-column:1; grid-row:1/3; }
+.spaces-grid .sg-tr    { grid-column:2; grid-row:1; }
+.spaces-grid .sg-br    { grid-column:2; grid-row:2; }
+.sg-img {
+  width:100%; height:100%;
+  object-fit:cover; display:block;
+  transition:transform 0.6s ease;
+}
+.spaces-grid > div { overflow:hidden; }
+.spaces-grid > div:hover .sg-img { transform:scale(1.04); }
+@media(max-width:640px){
+  .spaces-grid { grid-template-columns:1fr; grid-template-rows:260px 200px 160px; }
+  .spaces-grid .sg-main { grid-column:1; grid-row:1; }
+  .spaces-grid .sg-tr   { grid-column:1; grid-row:2; }
+  .spaces-grid .sg-br   { grid-column:1; grid-row:3; }
+  .spaces-tab { padding:0.7rem 1.2rem; font-size:0.6rem; }
+}
+
+/* Single space photo */
+.spaces-single { width:100%; height:520px; overflow:hidden; }
+.sg-img-single { width:100%; height:100%; object-fit:cover; object-position:center; display:block; transition:transform 0.7s ease; }
+.spaces-single:hover .sg-img-single { transform:scale(1.03); }
+@media(max-width:640px){ .spaces-single { height:300px; } }
+
+/* Hero Caracol Azul partner badge */
+.hero-caracol-partner {
+  position:absolute;
+  bottom:5.5rem;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  text-align:center;
+  animation:fadeInUp 1.2s ease 1.4s both;
+}
+.hero-caracol-partner img {
+  height:56px;
+  width:auto;
+  opacity:0.88;
+  filter:brightness(0) invert(1);
+  transition:opacity 0.3s;
+}
+.hero-caracol-partner img:hover { opacity:1; }
+@media(max-width:640px){
+  .hero-caracol-partner { bottom:5rem; }
+  .hero-caracol-partner img { height:44px; }
+}
+</style>
+<style id="claude-agent-animation-styles">
+      @keyframes claude-pulse {
+        0% {
+          box-shadow: 
+            inset 0 0 10px rgba(217, 119, 87, 0.5),
+            inset 0 0 20px rgba(217, 119, 87, 0.3),
+            inset 0 0 30px rgba(217, 119, 87, 0.1);
+        }
+        50% {
+          box-shadow: 
+            inset 0 0 15px rgba(217, 119, 87, 0.7),
+            inset 0 0 25px rgba(217, 119, 87, 0.5),
+            inset 0 0 35px rgba(217, 119, 87, 0.2);
+        }
+        100% {
+          box-shadow: 
+            inset 0 0 10px rgba(217, 119, 87, 0.5),
+            inset 0 0 20px rgba(217, 119, 87, 0.3),
+            inset 0 0 30px rgba(217, 119, 87, 0.1);
+        }
+      }
+    </style><link type="text/css" rel="stylesheet" href="chrome-extension://fheoggkfdfchfphceeifdbepaooicaho/css/mcafee_fonts.css"></head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  
+  <div class="nav-right">
+    <a href="tel:+34615815441" class="nav-tel">☎ 615 815 441</a>
+    <div class="lang-selector" id="langSelector">
+      <button class="lang-active" onclick="toggleLangMenu()"><span id="langFlag">🇪🇸</span> <span id="langCode">ES</span></button>
+      <div class="lang-menu" id="langMenu">
+        <button onclick="setLang('es')">🇪🇸 ES</button>
+        <button onclick="setLang('en')">🇬🇧 EN</button>
+        <button onclick="setLang('fr')">🇫🇷 FR</button>
+        <button onclick="setLang('de')">🇩🇪 DE</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay2"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-i18n="hero-badge">Restaurante · Benicàssim · Castellón</div>
+    <img src="img/logo.png" alt="El Tinglao" class="hero-logo-img">
+    <p class="hero-tagline" data-i18n="hero-tagline">Cocina de producto · Ambiente único</p>
+    <div class="hero-cta">
+      <a href="#reservas" class="btn btn-gold" data-i18n="hero-btn-reservar">🗓  Reservar mesa</a>
+      <a href="#carta" class="btn btn-outline" data-i18n="hero-btn-carta">📖  Ver la carta</a>
+      <a href="#eventos" class="btn btn-teja" data-i18n="hero-btn-eventos">🥂  Eventos / Empresas</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><span data-i18n="scroll-hint">Descubrir nuestros espacios</span><div class="scroll-line"></div>
+<div class="hero-caracol-partner">
+  <img src="img/caracol-badge.png" alt="Gin Caracol Azul · Partner oficial">
+</div>
+</div>
+</div>
+
+<!-- TRIPADVISOR BADGE -->
+<div style="background:var(--oscuro);padding:2rem 1rem;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(206,138,57,0.2);border-bottom:1px solid rgba(206,138,57,0.2);">
+  <a href="https://www.tripadvisor.es/Restaurant_Review-g667782-d27512646-Reviews-El_Tinglao-Benicasim_Province_of_Castellon_Valencian_Community.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:1.6rem;text-decoration:none;background:rgba(52,224,161,0.07);border:1px solid rgba(52,224,161,0.25);border-radius:4px;padding:1.2rem 2rem;">
+    <!-- Owl icon + green circle badge -->
+    <div style="position:relative;flex-shrink:0;">
+      <svg width="62" height="62" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <circle cx="256" cy="256" r="256" fill="#34E0A1"></circle>
+        <ellipse cx="174" cy="262" rx="76" ry="76" fill="white"></ellipse>
+        <ellipse cx="338" cy="262" rx="76" ry="76" fill="white"></ellipse>
+        <circle cx="174" cy="262" r="46" fill="#1a1a1a"></circle>
+        <circle cx="338" cy="262" r="46" fill="#1a1a1a"></circle>
+        <circle cx="185" cy="250" r="16" fill="white"></circle>
+        <circle cx="349" cy="250" r="16" fill="white"></circle>
+        <path d="M120 188 Q256 118 392 188" stroke="white" stroke-width="16" fill="none" stroke-linecap="round"></path>
+        <!-- beak -->
+        <path d="M242 298 L256 318 L270 298 Z" fill="white"></path>
+      </svg>
+      <!-- TOP 10% badge -->
+      <div style="position:absolute;top:-8px;right:-10px;background:#34E0A1;color:#111;font-family:Raleway,sans-serif;font-size:0.5rem;font-weight:800;letter-spacing:0.05em;line-height:1.1;padding:3px 5px;border-radius:3px;text-align:center;">TOP<br>10%</div>
+    </div>
+    <!-- Text block -->
+    <div style="text-align:left;">
+      <div style="color:#34E0A1;font-family:Raleway,sans-serif;font-size:0.58rem;letter-spacing:0.28em;text-transform:uppercase;font-weight:700;margin-bottom:2px;">Travellers' Choice™ Awards</div>
+      <div style="color:white;font-family:Cormorant Garamond,serif;font-size:1.3rem;font-weight:700;letter-spacing:0.04em;line-height:1.2;">El Tinglao</div>
+      <div style="color:rgba(212,199,180,0.7);font-family:Raleway,sans-serif;font-size:0.62rem;letter-spacing:0.1em;margin:3px 0 6px;" data-i18n="ta-sub">Top 10% mundial · Ganador 2025</div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span style="color:#34E0A1;font-size:1rem;letter-spacing:2px;">★★★★★</span>
+        <span style="color:rgba(212,199,180,0.5);font-family:Raleway,sans-serif;font-size:0.58rem;letter-spacing:0.1em;">Winner 2025</span>
+      </div>
+    </div>
+  </a>
+</div>
+
+<!-- CARTA -->
+
+<!-- ESPACIOS -->
+<div class="spaces-section" id="espacios">
+  <div class="spaces-inner">
+    <span class="section-label reveal visible" data-i18n="carta-label">Gastronomía</span>
+    <h2 class="section-title reveal visible">Nuestros <em>espacios</em></h2>
+    <div class="spaces-tabs">
+      <button class="spaces-tab" onclick="switchSpace('azotea',this)">Azotea</button>
+      <button class="spaces-tab" onclick="switchSpace('jardin',this)">Jardín</button>
+      <button class="spaces-tab active" onclick="switchSpace('gastro',this)">Gastro Pub</button>
+    </div>
+  </div>
+
+    <div class="spaces-gallery" id="sg-azotea">
+    <div class="spaces-single">
+      <img class="sg-img-single" src="img/azotea.jpg" alt="Azotea El Tinglao" loading="lazy">
+    </div>
+  </div>
+
+  <div class="spaces-gallery" id="sg-jardin">
+    <div class="spaces-single">
+      <img class="sg-img-single" src="img/jardin.jpg" alt="Jardín El Tinglao" loading="lazy">
+    </div>
+  </div>
+
+  <div class="spaces-gallery active" id="sg-gastro">
+    <div class="spaces-single">
+      <img class="sg-img-single" src="img/gastropub.jpg" alt="Gastro Pub El Tinglao" loading="lazy">
+    </div>
+  </div>
+</div>
+
+<div class="carta-section" id="carta">
+<div class="carta-inner">
+  <span class="section-label reveal visible" data-i18n="carta-label">Gastronomía</span>
+  <h2 class="section-title reveal visible" data-i18n="carta-title">Nuestra <em>carta</em></h2>
+  <p class="section-desc reveal visible" data-i18n="carta-desc">Cocina honesta, producto de temporada y sabores que invitan a quedarse. Consulta con nuestro equipo si tienes alguna alergia no listada.</p>
+
+  <!-- TABS -->
+  <div class="carta-accordion">
+
+    <!-- COMIDA REAL WIX -->
+    <div class="acc-item" id="acc-comida">
+      <button class="acc-header" onclick="toggleAcc('comida')">
+        <span data-i18n="tab-comida">🍽 Comida</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body"><div class="acc-content">
+
+        <div class="dept-title" data-i18n="s-aperitivos">Aperitivos</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-anchoas">Anchoas de Santoña con AOVE</div>
+          </div><div class="plato-precio">2,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-gildas">Gildas del Cantábrico</div>
+            <div class="plato-desc" data-i18n="pd-gildas">Boquerón, anchoa, aceituna rellena y piparra</div>
+          </div><div class="plato-precio">2,80 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-tartar">Montadito de steak tartar <small style="color:var(--verde);font-size:0.72rem"> · 4 uds</small></div>
+            <div class="plato-desc" data-i18n="pd-tartar">Sobre brioche con mahonesa de soja</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Huevos</span><span class="alergeno">Sésamo</span><span class="alergeno">Soja</span><span class="alergeno">Mostaza</span></div>
+          </div><div class="plato-precio">17,00 €</div>
+        </div>
+
+        <div class="dept-title" data-i18n="s-abrir">Para abrir boca</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Patatas NUUN</div>
+            <div class="plato-alergenos"><span class="alergeno">Huevos</span><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span></div>
+          </div><div class="plato-precio">9,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-croquetas">Croquetas de carrillera <small style="color:var(--verde);font-size:0.72rem"> · 6 uds</small></div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Soja</span></div>
+          </div><div class="plato-precio">13,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-tempura">Tempura de verduras ecológicas y gambas</div>
+            <div class="plato-desc" data-i18n="pd-tempura">Verduras ecológicas cultivadas en Benicàssim con salsas japonesas</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Crustáceos</span><span class="alergeno">Soja</span></div>
+          </div><div class="plato-precio">17,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-zamburinas">Zamburiñas asadas <small style="color:var(--verde);font-size:0.72rem"> · 6 uds</small></div>
+            <div class="plato-desc" data-i18n="pd-zamburinas">Con apio y alioli de ajo negro</div>
+            <div class="plato-alergenos"><span class="alergeno">Moluscos</span><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">19,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-patatas-km">Patatas ecológicas km0</div>
+            <div class="plato-desc" data-i18n="pd-patatas-km">Con jamón ibérico, huevos fritos en aceite de oliva y virutas de foie</div>
+            <div class="plato-alergenos"><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">17,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-torreznos">Torreznos de Soria con huevos y piparra</div>
+            <div class="plato-alergenos"><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">12,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-sepia">Sepia del Grao con alcachofas confitadas</div>
+            <div class="plato-alergenos"><span class="alergeno">Moluscos</span></div>
+          </div><div class="plato-precio">16,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-boquerones">Boquerones del Grao en témpura a la malagueña</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Pescado</span></div>
+          </div><div class="plato-precio">14,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-chips">Chips de alcachofa con miel de caña</div>
+          </div><div class="plato-precio">12,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-mejillones">Mejillones al vapor de albariño y romero</div>
+            <div class="plato-alergenos"><span class="alergeno">Moluscos</span></div>
+          </div><div class="plato-precio">13,50 €</div>
+        </div>
+
+        <div class="dept-title" data-i18n="s-ensaladas">Ensaladas</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-ens-cabra">Ensalada de queso de cabra</div>
+            <div class="plato-desc" data-i18n="pd-ens-cabra">Lechugas, tomates, queso de cabra y vinagreta de frutos secos</div>
+            <div class="plato-alergenos"><span class="alergeno">Lácteos</span><span class="alergeno">Frutos secos</span></div>
+          </div><div class="plato-precio">14,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-ens-ventresca">Ensalada de ventresca de atún</div>
+            <div class="plato-desc" data-i18n="pd-ens-ventresca">Tomates, cebolla morada, aceituna de Aragón y ventresca de bonito</div>
+            <div class="plato-alergenos"><span class="alergeno">Pescado</span></div>
+          </div><div class="plato-precio">15,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-ens-burrata">Ensalada de tomate rosa y burrata</div>
+            <div class="plato-desc" data-i18n="pd-ens-burrata">Tomates rosa con burrata, sardina ahumada y vinagreta de albahaca</div>
+            <div class="plato-alergenos"><span class="alergeno">Lácteos</span><span class="alergeno">Pescado</span><span class="alergeno">Frutos secos</span></div>
+          </div><div class="plato-precio">15,00 €</div>
+        </div>
+
+        <div class="dept-title" data-i18n="s-mar">Del mar</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-pulpo">Taquitos de pulpo crujiente</div>
+            <div class="plato-desc" data-i18n="pd-pulpo">Con hummus etíope y parmentier de patata trufada</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Moluscos</span><span class="alergeno">Lácteos</span><span class="alergeno">Sésamo</span></div>
+          </div><div class="plato-precio">21,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-bacalao">Bacalao gratinado al alioli de ajo negro</div>
+            <div class="plato-desc" data-i18n="pd-bacalao">Con verduritas al wok</div>
+            <div class="plato-alergenos"><span class="alergeno">Pescado</span><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">21,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-chipirones">Chipirones a la plancha</div>
+            <div class="plato-desc" data-i18n="pd-chipirones">Con cebolla caramelizada</div>
+            <div class="plato-alergenos"><span class="alergeno">Moluscos</span></div>
+          </div><div class="plato-precio">14,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-dorada">Lomo de dorada a la espalda</div>
+            <div class="plato-desc" data-i18n="pd-dorada">Con verduritas al wok</div>
+            <div class="plato-alergenos"><span class="alergeno">Pescado</span><span class="alergeno">Soja</span></div>
+          </div><div class="plato-precio">18,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-lubina">Lubina con verduritas al wok</div>
+            <div class="plato-alergenos"><span class="alergeno">Pescado</span></div>
+          </div><div class="plato-precio">18,00 €</div>
+        </div>
+
+        <div class="dept-title" data-i18n="s-carnes">Nuestras carnes</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-costilla">Costilla a baja temperatura</div>
+            <div class="plato-desc" data-i18n="pd-costilla">Nacarada en BBQ de Jack Daniel's</div>
+          </div><div class="plato-precio">22,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-secreto">Secreto ibérico</div>
+            <div class="plato-desc" data-i18n="pd-secreto">Con pimientos de padrón</div>
+          </div><div class="plato-precio">24,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-carrillera">Carrillera ibérica</div>
+            <div class="plato-desc" data-i18n="pd-carrillera">En salsa de vino tinto con parmentier trufada</div>
+            <div class="plato-alergenos"><span class="alergeno">Lácteos</span></div>
+          </div><div class="plato-precio">21,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-burger-tgl">Hamburguesa EL TINGLAO</div>
+            <div class="plato-desc" data-i18n="pd-burger-tgl">Pan brioche · Wagyu · salsa camembert · cebolla crispy · bacon · queso de cabra · patatas paja · salsa de cabrales</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">19,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-burger-bbk">Hamburguesa BBK</div>
+            <div class="plato-desc" data-i18n="pd-burger-bbk">Pan brioche · Wagyu · queso cheddar · cebolla caramelizada · bacon · salsa BBK Jack Daniel's · confitura de tomate</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">18,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-entrecotte">Entrecotte Premium de vaca Simmental</div>
+            <div class="plato-desc" data-i18n="pd-entrecotte">30 días de maduración · 500 g</div>
+          </div><div class="plato-precio">48,00 €</div>
+        </div>
+
+        <div class="dept-title" data-i18n="s-capricho">Y de capricho…</div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-torrija">Torrija de brioche</div>
+            <div class="plato-desc" data-i18n="pd-torrija">Bañada en horchata con helado de leche merengada</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Huevos</span><span class="alergeno">Frutos secos</span></div>
+          </div><div class="plato-precio">8,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-tarta-ny">Tarta de queso New York</div>
+            <div class="plato-desc" data-i18n="pd-tarta-ny">Con confitura de frutas del bosque</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Huevos</span></div>
+          </div><div class="plato-precio">8,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-tarta-3choc">Tarta de tres chocolates</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span></div>
+          </div><div class="plato-precio">8,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-coulant">Coulant de chocolate</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Huevos</span><span class="alergeno">Soja</span><span class="alergeno">Frutos secos</span></div>
+          </div><div class="plato-precio">7,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-brownie">Brownie de chocolate</div>
+            <div class="plato-desc" data-i18n="pd-brownie">Con helado de leche merengada</div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Frutos secos</span></div>
+          </div><div class="plato-precio">7,50 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre" data-i18n="p-helado">Bola de helado</div>
+            <div class="plato-desc" data-i18n="pd-helado">Leche merengada, turrón o vainilla</div>
+          </div><div class="plato-precio">3,50 €</div>
+        </div>
+
+        <p style="margin-top:2rem;font-size:0.72rem;color:rgba(46,45,35,0.5);font-style:italic;text-align:center;" data-i18n="aviso-alergenos">⚠ Si tienes alguna alergia o intolerancia, consulta con nuestro equipo antes de pedir. Precios con IVA incluido.</p>
+
+      </div></div>
+    </div>
+
+    <!-- VINOS -->
+    <div class="acc-item" id="acc-vinos">
+      <button class="acc-header" onclick="toggleAcc('vinos')">
+        <span data-i18n="tab-vinos">🍷 Vinos</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body"><div class="acc-content">
+
+        <div class="dept-title" data-i18n="s-vinos-blancos-rueda">Blancos · D.O. Rueda</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Emina</div><div class="plato-desc">Verdejo</div></div><div class="plato-precio">19,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Belondrade y Lurton</div><div class="plato-desc" data-i18n="pd-belondrade">Verdejo fermentado en barrica de roble francés</div></div><div class="plato-precio">48,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Le Domaine – Abadía Retuerta</div><div class="plato-desc" data-i18n="pd-ledomaine">80% Sauvignon Blanc, 20% Verdejo · 5 meses en barrica</div></div><div class="plato-precio">50,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-blancos-rias">Blancos · D.O. Rías Baixas</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Poda</div><div class="plato-desc">Albariño</div></div><div class="plato-precio">20,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Camiño dos Faros</div><div class="plato-desc" data-i18n="pd-camino">Treixadura, torrontés y otras</div></div><div class="plato-precio">20,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Viña Caeira</div><div class="plato-desc">Albariño</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">El Jardín de Lucía</div><div class="plato-desc" data-i18n="pd-jardin-lucia">Albariño fermentado en barrica · 4 meses sobre lías</div></div><div class="plato-precio">27,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Terras Gauda</div><div class="plato-desc">Albariño</div></div><div class="plato-precio">25,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Mar de Frades</div><div class="plato-desc">Albariño</div></div><div class="plato-precio">27,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-blancos-otros">Blancos · Otras D.O.</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ceramic Sauvignon Blanc</div><div class="plato-desc" data-i18n="pd-ceramic-b">Fermentado en barrica · MAGNUM 1,5 L · Vicente Gandía</div></div><div class="plato-precio">60,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Full Flap</div><div class="plato-desc">Bierzo</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Villa Delmas</div><div class="plato-desc" data-i18n="pd-villadelmas">Le Petit Grain · Francia</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Habla de Ti</div><div class="plato-desc" data-i18n="pd-habladeti">Sauvignon Blanc · VT Extremadura</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Habla del Mar</div><div class="plato-desc" data-i18n="pd-habladelmar">Vino submarino · Costa Atlántica</div></div><div class="plato-precio">30,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Poda Godello</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Chivite Las Fincas</div></div><div class="plato-precio">22,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">San Clodio</div><div class="plato-desc">Ribeiro</div></div><div class="plato-precio">23,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Pago Finca Elez Chardonnay</div><div class="plato-desc" data-i18n="pd-fincaelez-b">Vino ecológico</div></div><div class="plato-precio">24,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bobal · Vicente Gandía</div></div><div class="plato-precio">24,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Muga Blanco</div></div><div class="plato-precio">24,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">O Luar Do Sil Godello 2022</div><div class="plato-desc">Pago de los Capellanes</div></div><div class="plato-precio">38,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Domaine Chablis</div><div class="plato-desc" data-i18n="pd-france">Francia</div></div><div class="plato-precio">32,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Waltraud Riesling</div><div class="plato-desc">D.O. Penedès</div></div><div class="plato-precio">32,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Valdesil Godello</div></div><div class="plato-precio">38,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Baraja Godello</div></div><div class="plato-precio">42,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Marimar Estate Chardonnay</div><div class="plato-desc" data-i18n="pd-marimar">Russian River Valley · Estados Unidos</div></div><div class="plato-precio">45,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-tintos-rioja">Tintos · D.O. Rioja</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Montecillo Crianza</div></div><div class="plato-precio">20,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Montecillo Edición Limitada</div></div><div class="plato-precio">22,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Campillo Crianza</div></div><div class="plato-precio">23,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Campillo Reserva</div></div><div class="plato-precio">36,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Predicador</div></div><div class="plato-precio">30,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Muga Crianza</div></div><div class="plato-precio">30,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Marqués de Riscal RS</div></div><div class="plato-precio">31,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Carlos Moro Matarromera</div></div><div class="plato-precio">31,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Viña Ardanza Reserva</div></div><div class="plato-precio">39,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">200 Monges Reserva 2013</div></div><div class="plato-precio">68,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-tintos-ribera">Tintos · D.O. Ribera del Duero</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Viña Vilano Roble</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Viña Vilano Crianza</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Vilano 57 Crianza</div></div><div class="plato-precio">49,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Protos Crianza</div></div><div class="plato-precio">27,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Alonso del Yerro</div></div><div class="plato-precio">33,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Matarromera</div></div><div class="plato-precio">35,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Abadía Retuerta S.E. 2020</div></div><div class="plato-precio">45,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Abadía Retuerta S.E. 2018</div></div><div class="plato-precio">49,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Mauro 2022</div><div class="plato-desc" data-i18n="pd-mauro">Tierra de Castilla y León</div></div><div class="plato-precio">58,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Baraja</div></div><div class="plato-precio">60,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Dominio del Águila Reserva 2019</div></div><div class="plato-precio">95,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-tintos-otros">Tintos · Otras D.O.</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">El Beso de las Uvas Coupage</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Juan Gil</div><div class="plato-desc">Jumilla</div></div><div class="plato-precio">20,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Quinta de Aves Coupage</div></div><div class="plato-precio">20,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Quinta de Aves Phoenix</div></div><div class="plato-precio">28,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Habla del Silencio</div></div><div class="plato-precio">21,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Vizuecos</div><div class="plato-desc">Castellón</div></div><div class="plato-precio">23,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bobal · Vicente Gandía</div></div><div class="plato-precio">23,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Pago Finca Elez</div></div><div class="plato-precio">24,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ceramic Monastrell Tinaja</div><div class="plato-desc">Vicente Gandía</div></div><div class="plato-precio">27,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">El Sequé</div></div><div class="plato-precio">39,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vinos-rosados">Rosados</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Doncella</div><div class="plato-desc" data-i18n="pd-ladoncella">100% Tempranillo</div></div><div class="plato-precio">17,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">La Novia Ideal</div><div class="plato-desc" data-i18n="pd-noviaideal">Rosado semidulce con burbuja</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Viña Esmeralda</div><div class="plato-desc" data-i18n="pd-esmeralda">100% Garnacha Tinta</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Chivite Rosé</div></div><div class="plato-precio">22,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Habla de Ti Rosé</div><div class="plato-desc">VT Extremadura</div></div><div class="plato-precio">22,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-champagnes">Champagnes</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Moët &amp; Chandon Brut Imperial</div></div><div class="plato-precio">90,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Moët &amp; Chandon Ice Imperial</div></div><div class="plato-precio">110,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Moët &amp; Chandon Rosé</div></div><div class="plato-precio">100,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Moët Ice Imperial Rosé</div></div><div class="plato-precio">125,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Taittinger Brut Nature Reserva</div></div><div class="plato-precio">90,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-cavas">Cavas</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Privat Atelier Brut Nature</div></div><div class="plato-precio">35,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Anna de Codorniu Blanc de Blancs</div></div><div class="plato-precio">25,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-sangrias">Sangrías · Jarras</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre" data-i18n="p-sangria-inglesa">Sangría inglesa</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre" data-i18n="p-sangria-cava">Sangría de cava y fresas</div></div><div class="plato-precio">19,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre" data-i18n="p-sangria-blanca">Sangría de vino blanco y mango</div></div><div class="plato-precio">19,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre" data-i18n="p-sangria-tinta">Sangría de vino tinto</div></div><div class="plato-precio">18,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre" data-i18n="p-jarra-cerveza">Jarra de cerveza</div></div><div class="plato-precio">10,00 €</div></div>
+
+      </div></div>
+    </div>
+
+    <!-- COPAS -->
+    <div class="acc-item" id="acc-copas">
+      <button class="acc-header" onclick="toggleAcc('copas')">
+        <span data-i18n="tab-copas">🥂 Copas</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body"><div class="acc-content">
+
+        <div class="dept-title" data-i18n="s-ginebras">Ginebras</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bombay</div><div class="plato-desc" data-i18n="garn-limon">Twist de limón</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Caracol Azul</div><div class="plato-desc" data-i18n="garn-naranja-jengibre">Twist de naranja y carpaccio de jengibre</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Citadelle</div><div class="plato-desc" data-i18n="garn-limon-naranja">Rodaja de limón y naranja</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Roku Gin</div><div class="plato-desc" data-i18n="garn-jengibre">Carpaccio de jengibre</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">N-3</div><div class="plato-desc" data-i18n="garn-limon-enebro">Twist de limón y bayas de enebro</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bulldog</div><div class="plato-desc" data-i18n="garn-lima-regaliz-clavo">Twist de lima, regaliz y clavo</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Gold 999.9</div><div class="plato-desc" data-i18n="garn-naranja">Twist de naranja</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Saffron Gin</div><div class="plato-desc" data-i18n="garn-limon-rodaja">Rodaja de limón</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Le Tribute</div><div class="plato-desc" data-i18n="garn-naranja">Twist de naranja</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Gin 119</div><div class="plato-desc" data-i18n="garn-menta">Menta</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Gin 119 Edición Especial</div><div class="plato-desc" data-i18n="garn-naranja-rodaja">Rodaja de naranja</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Gin Loe</div><div class="plato-desc" data-i18n="garn-limon-naranja-cardamomo">Twist de limón, naranja y cardamomo</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ginself</div><div class="plato-desc" data-i18n="garn-naranja-chufa">Twist de naranja y chufa</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Fifty Pounds</div><div class="plato-desc" data-i18n="garn-limon-enebro">Twist de limón y bayas de enebro</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Brockmans</div><div class="plato-desc" data-i18n="garn-fresas">Fresas</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Brockmans Orange</div><div class="plato-desc" data-i18n="garn-naranja-rodaja">Rodaja de naranja</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Hendricks</div><div class="plato-desc" data-i18n="garn-pepino">Carpaccio de pepino</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Sipsmith</div><div class="plato-desc" data-i18n="garn-limon">Twist de limón</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Nº 209</div><div class="plato-desc" data-i18n="garn-limon-corteza-lima">Corteza de limón y twist de lima</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Mombasa</div><div class="plato-desc" data-i18n="garn-angostura-naranja-clavo">Angostura, twist de naranja y clavo</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Martin Miller's</div><div class="plato-desc" data-i18n="garn-lima-enebro">Twist de lima y bayas de enebro</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">June Melocotón</div><div class="plato-desc" data-i18n="garn-uva">Uva</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">June Pera</div><div class="plato-desc" data-i18n="garn-uva">Uva</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Botanic</div><div class="plato-desc" data-i18n="garn-lima-enebro">Twist de lima y bayas de enebro</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Tanqueray TEN</div><div class="plato-desc" data-i18n="garn-naranja-limon">Twist de naranja y limón</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">The London Nº1</div><div class="plato-desc" data-i18n="garn-limon-lima-enebro">Twist de limón, lima y bayas de enebro</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Botanic Ultra Premium</div><div class="plato-desc" data-i18n="garn-naranja-regaliz">Twist de naranja y regaliz</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Tanqueray Rangpur</div><div class="plato-desc" data-i18n="garn-limon-pomelo">Twist de limón y pomelo</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">G'Vine Floraison</div><div class="plato-desc" data-i18n="garn-uva">Uva</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">G'Vine Nouaison</div><div class="plato-desc" data-i18n="garn-uva">Uva</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Gin Mare</div><div class="plato-desc" data-i18n="garn-albahaca-naranja">Hojas de albahaca y rodaja de naranja</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Plymouth</div><div class="plato-desc" data-i18n="garn-limon-enebro">Twist de limón y bayas de enebro</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Monkey 47</div><div class="plato-desc" data-i18n="garn-limon">Twist de limón</div></div><div class="plato-precio">14,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Jinzu</div><div class="plato-desc" data-i18n="garn-lima">Twist de lima</div></div><div class="plato-precio">14,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-rones">Rones</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bacardí</div><div class="plato-desc" data-i18n="orig-cuba">Cuba</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Santa Teresa</div><div class="plato-desc" data-i18n="orig-venezuela">Venezuela</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Havana Club 7 años</div><div class="plato-desc" data-i18n="orig-cuba">Cuba</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Cacique 500</div><div class="plato-desc" data-i18n="orig-venezuela">Venezuela</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Pampero Aniversario</div><div class="plato-desc" data-i18n="orig-venezuela">Venezuela</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Santísima Trinidad</div><div class="plato-desc" data-i18n="orig-cuba">Cuba</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Matusalem Gran Reserva · Solera 15</div><div class="plato-desc" data-i18n="orig-dominicana">República Dominicana</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">The Kraken</div><div class="plato-desc" data-i18n="orig-trinidad">Trinidad y Tobago</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Brugal 1888</div><div class="plato-desc" data-i18n="orig-dominicana">República Dominicana</div></div><div class="plato-precio">15,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Santa Teresa 1796</div><div class="plato-desc" data-i18n="orig-venezuela">Venezuela</div></div><div class="plato-precio">15,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Zacapa Centenario 23 años</div><div class="plato-desc" data-i18n="orig-guatemala">Guatemala</div></div><div class="plato-precio">15,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-whisky-blended">Whisky · Blended Scotch</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Dewars White Label</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Famous Grouse</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ballantine's 10 years</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ballantine's 12 years</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Drambuie</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Dewars 12 years</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Johnnie Walker Black Label 12 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Chivas Regal 12 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">J&amp;B 15 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Buscavidas</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">The Antiquary</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Dimple 15 years</div></div><div class="plato-precio">14,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Chivas Regal 18 years</div></div><div class="plato-precio">15,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Haig Club</div></div><div class="plato-precio">15,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-whisky-irish-american">Whisky · Irish &amp; American</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Tullamore Dew</div><div class="plato-desc" data-i18n="wt-irish">Irish Whiskey</div></div><div class="plato-precio">9,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Four Roses</div><div class="plato-desc" data-i18n="wt-bourbon-ky">Kentucky Bourbon</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Southern Comfort</div><div class="plato-desc" data-i18n="wt-liqueur-whiskey">Liqueur with Whiskey</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Jack Daniel's</div><div class="plato-desc" data-i18n="wt-tennessee">Tennessee Whiskey</div></div><div class="plato-precio">9,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bushmills</div><div class="plato-desc" data-i18n="wt-irish">Irish Whiskey</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Buffalo Trace</div><div class="plato-desc" data-i18n="wt-bourbon">Bourbon</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Busker</div><div class="plato-desc" data-i18n="wt-irish">Irish Whiskey</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Bulleit</div><div class="plato-desc" data-i18n="wt-bourbon-ky">Kentucky Bourbon</div></div><div class="plato-precio">13,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-whisky-malt">Whisky · Single Malt</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Laphroaig 10 years</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Talisker 10 years</div></div><div class="plato-precio">11,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Cardhu 12 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Knockando 12 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Glenfiddich 12 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ardbeg 10 years</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Cardhu 15 years</div></div><div class="plato-precio">14,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Glenrothes</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Macallan 12 years</div></div><div class="plato-precio">14,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Lagavulin 16 years</div></div><div class="plato-precio">17,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Hibiki Japanese Harmony</div><div class="plato-desc" data-i18n="wt-japanese">Japanese Whisky</div></div><div class="plato-precio">16,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-vodka">Vodka</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Eristoff</div><div class="plato-desc" data-i18n="orig-georgia">Georgia</div></div><div class="plato-precio">8,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Tito's Handmade</div><div class="plato-desc" data-i18n="orig-texas">Texas</div></div><div class="plato-precio">10,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Grey Goose</div><div class="plato-desc" data-i18n="orig-france">Francia</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Belvedere</div><div class="plato-desc" data-i18n="orig-poland">Polonia</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Lex</div><div class="plato-desc" data-i18n="orig-ukraine">Ucrania</div></div><div class="plato-precio">15,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Beluga</div><div class="plato-desc" data-i18n="orig-russia">Rusia</div></div><div class="plato-precio">15,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Ultimat</div><div class="plato-desc" data-i18n="orig-germany">Alemania</div></div><div class="plato-precio">15,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-tequilas">Tequilas · Chupito / Copa</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Jalisco</div></div><div class="plato-precio">5 € / 12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Don Julio</div></div><div class="plato-precio">6 € / 12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Don Julio Reposado</div></div><div class="plato-precio">7 € / 13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Patrón</div></div><div class="plato-precio">7 € / 15,00 €</div></div>
+
+        <div class="dept-title" data-i18n="s-brandy">Brandy, Coñac &amp; Otros</div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Cardenal Mendoza</div><div class="plato-desc" data-i18n="tipo-brandy">Brandy</div></div><div class="plato-precio">12,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Remy Martin VSOP</div><div class="plato-desc" data-i18n="tipo-cognac">Coñac</div></div><div class="plato-precio">13,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Isabel Regina</div></div><div class="plato-precio">14,00 €</div></div>
+        <div class="plato"><div class="plato-left"><div class="plato-nombre">Larios 1886</div><div class="plato-desc" data-i18n="tipo-brandy">Brandy</div></div><div class="plato-precio">15,00 €</div></div>
+
+      </div></div>
+    </div>
+
+    <!-- CÓCTELES -->
+    <div class="acc-item" id="acc-cocteles">
+      <button class="acc-header" onclick="toggleAcc('cocteles')">
+        <span data-i18n="tab-cocteles">🍹 Cócteles</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body"><div class="acc-content">
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Mojito</div>
+            <div class="plato-desc" data-i18n="cd-mojito">Ron, limas, hierbabuena, soda y azúcar · Sabores: sandía, melón, mango y fresa</div>
+          </div><div class="plato-precio" data-i18n="precio-con-sin-8-7">Con alcohol 8 € · Sin 7 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">San Francisco</div>
+            <div class="plato-desc" data-i18n="cd-sanfrancisco">Zumos de frutas y granadina</div>
+          </div><div class="plato-precio" data-i18n="precio-con-sin-8-7">Con alcohol 8 € · Sin 7 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Ginger 43</div>
+            <div class="plato-desc" data-i18n="cd-ginger43">Licor 43, limas y ginger ale</div>
+          </div><div class="plato-precio">9,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Daiquiri</div>
+            <div class="plato-desc" data-i18n="cd-daiquiri">Ron, zumo de limón y azúcar · Sabores: sandía, melón, mango y fresa</div>
+          </div><div class="plato-precio">9,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Caipirinha</div>
+            <div class="plato-desc" data-i18n="cd-caipirinha">Cachaça, lima y azúcar</div>
+          </div><div class="plato-precio">9,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Moscow Mule</div>
+            <div class="plato-desc" data-i18n="cd-moscowmule">Vodka, zumo de lima, Schweppes Ginger Beer &amp; chile y piel de lima</div>
+          </div><div class="plato-precio">9,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Piña Colada</div>
+            <div class="plato-desc" data-i18n="cd-pinacolada">Ron, batida de coco, licor de coco y zumo de piña</div>
+          </div><div class="plato-precio">10,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Kraken Stormy</div>
+            <div class="plato-desc" data-i18n="cd-kraken">Ron Kraken, Schweppes Ginger Beer &amp; chile, corteza de lima y angostura</div>
+          </div><div class="plato-precio">13,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">June Melocotón</div>
+            <div class="plato-desc" data-i18n="cd-junepera">June Melocotón, Ginger Ale y uva</div>
+          </div><div class="plato-precio">12,00 €</div>
+        </div>
+
+        <div class="plato">
+          <div class="plato-left">
+            <div class="plato-nombre">Paloma</div>
+            <div class="plato-desc" data-i18n="cd-paloma">Tequila, lima y soda de pomelo · Servido en nuestro vaso "Mexican Skull glass"</div>
+          </div><div class="plato-precio">10,00 €</div>
+        </div>
+
+      </div></div>
+    </div>
+
+    <!-- CACHIMBAS -->
+    <div class="acc-item" id="acc-cachimbas">
+      <button class="acc-header" onclick="toggleAcc('cachimbas')">
+        <span data-i18n="tab-cachimbas">💨 Cachimbas</span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body"><div class="acc-content">
+
+        <p style="color:rgba(46,45,35,0.55);font-size:0.82rem;font-weight:300;line-height:1.8;margin-bottom:1.5rem;font-style:italic;" data-i18n="cachimba-intro">
+          Disfruta de nuestra selección de cachimbas en la azotea o el jardín. Servicio completo con carbón incluido y atención personalizada.
+        </p>
+
+        <div class="dept-title" data-i18n="s-cachimba-sabores">Sabores disponibles</div>
+
+        <div class="plato">
+          <div class="plato-left"><div class="plato-nombre" data-i18n="cach-citrica">Cítrica</div></div>
+          <div class="plato-precio">15,00 € <small style="color:rgba(46,45,35,0.45);font-size:0.7rem" data-i18n="cach-domingo">(Dom. 10 €)</small></div>
+        </div>
+        <div class="plato">
+          <div class="plato-left"><div class="plato-nombre" data-i18n="cach-afrutada">Afrutada</div></div>
+          <div class="plato-precio">15,00 € <small style="color:rgba(46,45,35,0.45);font-size:0.7rem" data-i18n="cach-domingo">(Dom. 10 €)</small></div>
+        </div>
+        <div class="plato">
+          <div class="plato-left"><div class="plato-nombre" data-i18n="cach-dulce">Dulce</div></div>
+          <div class="plato-precio">15,00 € <small style="color:rgba(46,45,35,0.45);font-size:0.7rem" data-i18n="cach-domingo">(Dom. 10 €)</small></div>
+        </div>
+        <div class="plato">
+          <div class="plato-left"><div class="plato-nombre" data-i18n="cach-mentolada">Mentolada</div></div>
+          <div class="plato-precio">15,00 € <small style="color:rgba(46,45,35,0.45);font-size:0.7rem" data-i18n="cach-domingo">(Dom. 10 €)</small></div>
+        </div>
+
+        <p style="margin-top:1.5rem;font-size:0.72rem;color:rgba(46,45,35,0.45);font-style:italic;text-align:center;" data-i18n="cach-aviso">
+          Prohibida la venta de tabaco a menores de edad.
+        </p>
+
+      </div></div>
+    </div>
+
+  </div>
+
+</div><!-- /carta-inner -->
+</div><!-- /carta-section -->
+
+<!-- CARACOL AZUL PARTNER -->
+<div class="partner-section">
+  <div class="partner-inner">
+
+    <div class="partner-visual">
+      <img src="img/caracol-botella.jpg" alt="Gin Caracol Azul Premium Slow Gin – botella" loading="lazy">
+    </div>
+
+    <div class="partner-visual-overlay">
+      <p class="partner-slowlife">slow life · slow love · slow gin</p>
+    </div>
+    <div class="partner-copy">
+      <div class="partner-eyebrow">Ginebra oficial · Partner</div>
+      <a href="https://gincaracolazul.es/" target="_blank" rel="noopener" style="display:block;margin-bottom:1.4rem;">
+        <img src="img/caracol-logo.png" alt="Caracol Azul logo" style="height:80px;width:auto;">
+      </a>
+      <p class="partner-desc">
+        Destilada artesanalmente en Benicàssim con 4 destilaciones, alcohol de vid, agua de Benassal y 12 botánicos de la Costa del Azahar. La esencia del Mediterráneo en cada copa.
+      </p>
+      <div class="partner-tags">
+        <span class="partner-tag">Artesanal</span>
+        <span class="partner-tag">Benicàssim</span>
+        <span class="partner-tag">4 destilaciones</span>
+        <span class="partner-tag">12 botánicos</span>
+      </div>
+      <a href="https://gincaracolazul.es/" target="_blank" rel="noopener" class="partner-cta">
+        Descubrir Caracol Azul →
+      </a>
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- EVENTOS -->
+<div class="eventos-section" id="eventos">
+<div class="eventos-inner">
+  <span class="section-label reveal" data-i18n="eventos-label2">Celebraciones especiales</span>
+  <h2 class="section-title reveal" data-i18n="eventos-title2">Menús para <em>eventos</em><br>y empresas</h2>
+  <div style="margin:1.5rem 0 0;" class="reveal">
+    <a href="https://wa.me/34615815441?text=Hola,%20me%20gustaría%20información%20sobre%20menús%20para%20eventos%20y%20empresas%20de%20El%20Tinglao" class="btn btn-wa" target="_blank"><span data-i18n="eventos-wa">💬  Consultar menú eventos / empresas</span></a>
+  </div>
+  <p class="section-desc reveal" style="margin-top:1.5rem;" data-i18n="eventos-desc2">Un único menú especial adaptado a cada tipo de celebración. Cuéntanos qué necesitas y lo hacemos realidad.</p>
+  <div class="eventos-grid">
+    <div class="evento-card reveal">
+      <span class="evento-icon"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36"><circle cx="20" cy="20" r="18" stroke="#c9a84c" stroke-width="1.4"></circle><path d="M20 10 Q21.5 7.5 20 6 Q18.5 7.5 20 10Z" fill="#c9a84c"></path><path d="M15 10 Q16.5 7.5 15 6 Q13.5 7.5 15 10Z" fill="#c9a84c"></path><path d="M25 10 Q26.5 7.5 25 6 Q23.5 7.5 25 10Z" fill="#c9a84c"></path><rect x="12" y="11" width="16" height="15" rx="2" stroke="#c9a84c" stroke-width="1.4" fill="none"></rect><line x1="12" y1="15" x2="28" y2="15" stroke="#c9a84c" stroke-width="1.2"></line><line x1="16" y1="19" x2="24" y2="19" stroke="#c9a84c" stroke-width="1.2"></line><line x1="16" y1="22" x2="21" y2="22" stroke="#c9a84c" stroke-width="1.2"></line></svg></span>
+      <h3>Cumpleaños</h3>
+      <p>Celebra con los tuyos en un ambiente especial. Menú festivo y atención personalizada para que lo único que tengas que hacer sea disfrutar.</p>
+    </div>
+    <div class="evento-card reveal">
+      <span class="evento-icon"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36"><circle cx="20" cy="20" r="18" stroke="#c9a84c" stroke-width="1.4"></circle><rect x="12" y="15" width="16" height="12" rx="1.5" stroke="#c9a84c" stroke-width="1.4" fill="none"></rect><path d="M16 15v-2a4 4 0 018 0v2" stroke="#c9a84c" stroke-width="1.4" fill="none"></path><circle cx="20" cy="21" r="1.8" fill="#c9a84c"></circle><line x1="20" y1="23" x2="20" y2="25" stroke="#c9a84c" stroke-width="1.4"></line></svg></span>
+      <h3>Empresas</h3>
+      <p>Comidas de trabajo, cenas de equipo, presentaciones... Espacio adaptable y servicio profesional a la altura de tu empresa.</p>
+    </div>
+    <div class="evento-card reveal">
+      <span class="evento-icon"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36"><circle cx="20" cy="20" r="18" stroke="#c9a84c" stroke-width="1.4"></circle><path d="M14 11h4l-2 9h-2L11 11h4z" stroke="#c9a84c" stroke-width="1.3" fill="none" stroke-linejoin="round"></path><path d="M22 11h4l3 9h-2l-2-9h-4z" stroke="#c9a84c" stroke-width="1.3" fill="none" stroke-linejoin="round"></path><line x1="16" y1="20" x2="24" y2="20" stroke="#c9a84c" stroke-width="1.3"></line><line x1="20" y1="20" x2="20" y2="27" stroke="#c9a84c" stroke-width="1.3"></line><line x1="16" y1="27" x2="24" y2="27" stroke="#c9a84c" stroke-width="1.3"></line></svg></span>
+      <h3>Celebraciones</h3>
+      <p>Aniversarios, comuniones, reuniones familiares. Diseñamos juntos el menú y el ambiente para que sea un día para recordar.</p>
+    </div>
+    <div class="evento-card reveal">
+      <span class="evento-icon"><svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36"><circle cx="20" cy="20" r="18" stroke="#c9a84c" stroke-width="1.4"></circle><circle cx="15" cy="16" r="3" stroke="#c9a84c" stroke-width="1.3" fill="none"></circle><circle cx="25" cy="16" r="3" stroke="#c9a84c" stroke-width="1.3" fill="none"></circle><path d="M10 28c0-4 2.5-5.5 5-5.5 1.5 0 3 .7 4 2 1-1.3 2.5-2 4-2 2.5 0 5 1.5 5 5.5" stroke="#c9a84c" stroke-width="1.3" fill="none"></path></svg></span>
+      <h3>Grupos</h3>
+      <p>Sin complicaciones. Menús cerrados, precios especiales para grupos y toda la atención que mereces desde el primer momento.</p>
+    </div>
+  </div>
+  <div class="eventos-cta reveal">
+    <a href="tel:+34615815441" class="btn btn-outline">📞 &nbsp;615 815 441</a>
+  </div>
+</div>
+</div>
+
+<!-- RESERVAS -->
+<div class="reservas-section" id="reservas">
+<div class="reservas-inner">
+  <span class="section-label" data-i18n="reservas-label2">¿Cuándo nos visitas?</span>
+  <h2 class="section-title reveal" data-i18n="reservas-title">Reserva tu <em>mesa</em></h2>
+  <p class="section-desc reveal" style="margin:0 auto 0.5rem;" data-i18n="reservas-desc2">Llámanos o escríbenos por WhatsApp. Estaremos encantados de buscarte el momento perfecto.</p>
+  <div class="reservas-btns reveal">
+    <a href="tel:+34615815441" class="btn btn-gold" data-i18n="btn-llamar2">📞  Llamar: 615 815 441</a>
+    <a href="https://wa.me/34615815441?text=Hola,%20quiero%20reservar%20una%20mesa%20en%20El%20Tinglao" class="btn btn-wa" target="_blank">💬 &nbsp;WhatsApp</a>
+    <a href="https://www.covermanager.com/reservation/module_restaurant/restaurante-el-tinglao-castellon" class="btn btn-cover" target="_blank" data-i18n="btn-covermanager">🗓  Reservar online</a>
+  </div>
+  <div class="contact-strip reveal">
+    <a href="https://maps.google.com/?q=Calle+Santo+Tomás+16,+12560+Benicàssim" target="_blank" class="contact-item">📍 C/ Santo Tomás 16, Benicàssim</a>
+    <a href="tel:+34615815441" class="contact-item">📞 615 815 441</a>
+    <a href="https://wa.me/34615815441" target="_blank" class="contact-item">💬 WhatsApp</a>
+  </div>
+</div>
+</div>
+
+<!-- QR -->
+<div class="qr-section" id="comunidad" style="background:var(--oscuro);padding:5rem 1.5rem;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;">
+    <span class="section-label reveal">Comunidad El Tinglao</span>
+    <h2 class="section-title reveal" style="margin-bottom:1rem;">Únete a nuestro<br><em>grupo de WhatsApp</em></h2>
+    <p class="section-desc reveal" style="margin-bottom:2.5rem;">Recibe en primicia nuestros eventos gastronómicos, menús especiales de temporada y ofertas exclusivas. Sin spam — solo lo bueno.</p>
+    <a href="https://wa.me/34615815441?text=Hola%2C%20me%20gustar%C3%ADa%20unirme%20al%20grupo%20de%20novedades%20de%20El%20Tinglao" target="_blank" rel="noopener" class="btn btn-wa reveal" style="font-size:1rem;padding:1.1rem 2.8rem;display:inline-flex;align-items:center;gap:0.7rem;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.558 4.122 1.533 5.853L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.499-5.186-1.371l-.372-.22-3.861.919.976-3.766-.242-.387A9.937 9.937 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"></path></svg>
+      Unirme al grupo de novedades
+    </a>
+  </div>
+</div>
+
+<script>
+// ── ACCORDION ──────────────────────────────────────────────────────────────
+function toggleAcc(id) {
+  const item = document.getElementById('acc-' + id);
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── SPACES GALLERY ─────────────────────────────────────────────────────────
+function switchSpace(id, btn) {
+  document.querySelectorAll('.spaces-gallery').forEach(g => g.classList.remove('active'));
+  document.querySelectorAll('.spaces-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sg-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── LANGUAGE SYSTEM ────────────────────────────────────────────────────────
+const FLAGS = { es:'🇪🇸', en:'🇬🇧', fr:'🇫🇷', de:'🇩🇪' };
+const CODES = { es:'ES', en:'EN', fr:'FR', de:'DE' };
+
+const i18n = {
+  'hero-badge':       { es:"Restaurante · Benicàssim · Castellón", en:"Restaurant · Benicàssim · Castellón", fr:"Restaurant · Benicàssim · Castellón", de:"Restaurant · Benicàssim · Castellón" },
+  'hero-tagline':     { es:"Cocina de producto · Ambiente único", en:"Seasonal cuisine · Unique atmosphere", fr:"Cuisine du terroir · Ambiance unique", de:"Saisonküche · Einzigartiges Ambiente" },
+  'hero-btn-reservar':{ es:"🗓  Reservar mesa", en:"🗓  Book a table", fr:"🗓  Réserver une table", de:"🗓  Tisch reservieren" },
+  'hero-btn-carta':   { es:"📖  Ver la carta", en:"📖  See the menu", fr:"📖  Voir la carte", de:"📖  Speisekarte" },
+  'hero-btn-eventos': { es:"🥂  Eventos / Empresas", en:"🥂  Events / Corporate", fr:"🥂  Événements / Entreprises", de:"🥂  Events / Firmen" },
+  'scroll-hint':      { es:"Descubrir nuestros espacios", en:"Discover our spaces", fr:"Découvrir nos espaces", de:"Unsere Räume entdecken" },
+  'ta-sub':           { es:"Top 10% mundial · Ganador 2025", en:"Top 10% worldwide · Winner 2025", fr:"Top 10% mondial · Lauréat 2025", de:"Top 10% weltweit · Gewinner 2025" },
+  'carta-label':      { es:"Gastronomía", en:"Our Menu", fr:"Notre Carte", de:"Speisekarte" },
+  'carta-title':      { es:"Nuestra <em>carta</em>", en:"Our <em>menu</em>", fr:"Notre <em>carte</em>", de:"Unsere <em>Karte</em>" },
+  'carta-desc':       { es:"Cocina honesta, producto de temporada y sabores que invitan a quedarse. Consulta con nuestro equipo si tienes alguna alergia no listada.", en:"Honest cooking, seasonal produce and flavours that make you want to stay. Ask our team about any unlisted allergens.", fr:"Une cuisine honnête, des produits de saison et des saveurs qui donnent envie de rester. Demandez à notre équipe pour tout allergène non listé.", de:"Ehrliche Küche, saisonale Produkte und Aromen, die zum Verweilen einladen. Fragen Sie unser Team nach nicht aufgeführten Allergenen." },
+  'tab-comida':       { es:"🍽 Comida", en:"🍽 Food", fr:"🍽 Plats", de:"🍽 Speisen" },
+  'tab-vinos':        { es:"🍷 Vinos", en:"🍷 Wines", fr:"🍷 Vins", de:"🍷 Weine" },
+  'tab-copas':        { es:"🥂 Copas", en:"🥂 Drinks", fr:"🥂 Boissons", de:"🥂 Getränke" },
+  'tab-cocteles':     { es:"🍹 Cócteles", en:"🍹 Cocktails", fr:"🍹 Cocktails", de:"🍹 Cocktails" },
+  'tab-cachimbas':    { es:"💨 Cachimbas", en:"💨 Shisha", fr:"💨 Chicha", de:"💨 Shisha" },
+  'eventos-label2':   { es:"Celebraciones especiales", en:"Special celebrations", fr:"Célébrations spéciales", de:"Besondere Feiern" },
+  'eventos-title2':   { es:"Menús para <em>eventos</em><br>y empresas", en:"Menus for <em>events</em><br>& corporate", fr:"Menus pour <em>événements</em><br>& entreprises", de:"Menüs für <em>Events</em><br>& Firmen" },
+  'eventos-desc2':    { es:"Un único menú especial adaptado a cada tipo de celebración. Cuéntanos qué necesitas y lo hacemos realidad.", en:"A special set menu tailored to each type of celebration. Tell us what you need and we will make it happen.", fr:"Un menu spécial adapté à chaque type de célébration. Dites-nous ce qu'il vous faut et nous le réaliserons.", de:"Ein spezielles Menü für jede Art von Feier. Sagen Sie uns, was Sie brauchen, und wir machen es möglich." },
+  'eventos-wa':       { es:"💬  Consultar menú eventos / empresas", en:"💬  Enquire about events / corporate", fr:"💬  Renseignements événements / entreprises", de:"💬  Events / Firmen anfragen" },
+  'reservas-label2':  { es:"¿Cuándo nos visitas?", en:"When are you visiting?", fr:"Quand nous rendez-vous visite?", de:"Wann besuchen Sie uns?" },
+  'reservas-title':   { es:"Reserva tu <em>mesa</em>", en:"Book your <em>table</em>", fr:"Réservez votre <em>table</em>", de:"Reservieren Sie Ihren <em>Tisch</em>" },
+  'reservas-desc2':   { es:"Llámanos o escríbenos por WhatsApp. Estaremos encantados de buscarte el momento perfecto.", en:"Call or WhatsApp us. We will be happy to find the perfect time for you.", fr:"Appelez-nous ou écrivez-nous par WhatsApp. Nous trouverons le moment parfait pour vous.", de:"Rufen Sie uns an oder schreiben Sie uns per WhatsApp. Wir finden gerne den perfekten Moment für Sie." },
+  'btn-covermanager': { es:"🗓  Reservar online", en:"🗓  Book online", fr:"🗓  Réserver en ligne", de:"🗓  Online reservieren" },
+  'btn-llamar2':      { es:"📞  Llamar: 615 815 441", en:"📞  Call: 615 815 441", fr:"📞  Appeler: 615 815 441", de:"📞  Anrufen: 615 815 441" },
+  'footer-rights':    { es:"Todos los derechos reservados", en:"All rights reserved", fr:"Tous droits réservés", de:"Alle Rechte vorbehalten" },
+  'aviso-alergenos':  { es:"⚠ Si tienes alguna alergia o intolerancia, consulta con nuestro equipo antes de pedir. Precios con IVA incluido.", en:"⚠ If you have any allergy or intolerance, please ask our team before ordering. Prices include VAT.", fr:"⚠ Si vous avez une allergie ou une intolérance, consultez notre équipe avant de commander. Prix TTC.", de:"⚠ Bei Allergien oder Unverträglichkeiten bitte unser Team fragen. Preise inkl. MwSt." },
+  'qr-label2':        { es:"Comunidad El Tinglao", en:"El Tinglao Community", fr:"Communauté El Tinglao", de:"El Tinglao Community" },
+};
+
+function applyLang(lang) {
+  localStorage.setItem('tinglao_lang', lang);
+  document.getElementById('langFlag').textContent = FLAGS[lang];
+  document.getElementById('langCode').textContent = CODES[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (i18n[key] && i18n[key][lang]) el.innerHTML = i18n[key][lang];
+  });
+  document.getElementById('langMenu').classList.remove('open');
+}
+
+function setLang(lang) { applyLang(lang); }
+function toggleLangMenu() { document.getElementById('langMenu').classList.toggle('open'); }
+
+// ── SCROLL REVEAL ──────────────────────────────────────────────────────────
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('tinglao_lang') || 'es';
+  applyLang(saved);
+});
+</script>
+
+
+<div id="dl-area" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 99999; background: rgb(26, 26, 46); color: white; padding: 20px; border-radius: 12px; font-family: Arial; font-size: 13px; box-shadow: rgba(0, 0, 0, 0.6) 0px 8px 32px; border: 1px solid rgb(232, 192, 125); min-width: 400px; text-align: center;"><div style="color:#e8c07d;font-weight:bold;margin-bottom:12px;font-size:15px">📦 Descarga tus archivos</div>
+<div style="margin-bottom:8px;font-size:12px;color:#aaa">El index.html pesa ahora <b style="color:#90EE90">74KB</b> (antes &gt;3MB)</div><a href="blob:https://eltinglaobenicassim.netlify.app/1e4563b6-7ebd-48b2-8d8d-518bf189e68f" download="index.html" style="display: block; margin: 6px auto; padding: 10px 20px; background: rgb(232, 192, 125); color: rgb(26, 26, 46); border-radius: 6px; font-weight: bold; text-decoration: none; width: 280px;">⬇️ index.html (74KB)</a><div style="margin-top: 12px; margin-bottom: 6px; color: rgb(232, 192, 125); font-weight: bold;">📁 Carpeta img/ (pon estos archivos dentro):</div><a href="blob:https://eltinglaobenicassim.netlify.app/6844e5eb-68c1-486a-80ee-7872394d73ba" download="logo.png" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ logo.png (355KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/df7246d5-7e4c-4631-bf23-a8251c13e12d" download="caracol-badge.png" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ caracol-badge.png (130KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/603f0816-b996-43a0-bed2-a9f9e1908160" download="azotea.jpg" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ azotea.jpg (136KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/94a43b61-3fed-4865-805f-4d87a42a18c9" download="jardin.jpg" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ jardin.jpg (181KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/d169a6f5-a2d8-45ea-8837-b32e09945953" download="gastropub.jpg" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ gastropub.jpg (167KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/302ba76f-8ebc-4a68-92e1-68da56be02a4" download="caracol-botella.jpg" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ caracol-botella.jpg (172KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/b90bf25d-285f-40c5-9537-bc38ee8463c9" download="caracol-logo.png" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ caracol-logo.png (130KB)</a><a href="blob:https://eltinglaobenicassim.netlify.app/739e3fc4-d2d3-4096-b2ac-5b467c6c327a" download="hero.jpg" style="display: inline-block; margin: 3px; padding: 7px 12px; background: rgb(42, 58, 42); color: rgb(144, 238, 144); border-radius: 5px; text-decoration: none; font-size: 12px; border: 1px solid rgb(58, 90, 58);">⬇️ hero.jpg (255KB)</a></div><span id="PING_CONTENT_DLS_POPUP" style="display: none;"></span><div style="background-color: transparent; border-width: medium; border-style: none; border-color: currentcolor; border-image: initial; bottom: 15px; display: block; margin: 0px; opacity: 1; padding: 0px; position: fixed; right: 15px; z-index: 2147483647;"></div><div id="claude-agent-glow-border" style="position: fixed; inset: 0px; pointer-events: none; z-index: 2147483646; opacity: 1; transition: opacity 0.3s ease-in-out; animation: 2s ease-in-out 0s infinite normal none running claude-pulse; box-shadow: rgba(217, 119, 87, 0.5) 0px 0px 10px inset, rgba(217, 119, 87, 0.3) 0px 0px 20px inset, rgba(217, 119, 87, 0.1) 0px 0px 30px inset;"></div><div id="claude-agent-stop-container" style="position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); justify-content: center; align-items: center; pointer-events: none; z-index: 2147483647;"><button id="claude-agent-stop-button" style="position: relative; transform: translateY(0px); padding: 12px 16px; background: rgb(250, 249, 245); color: rgb(20, 20, 19); border: 0.5px solid rgba(31, 30, 29, 0.4); border-radius: 12px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: rgba(217, 119, 87, 0.24) 0px 40px 80px, rgba(217, 119, 87, 0.24) 0px 4px 14px; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 1; user-select: none; pointer-events: auto; white-space: nowrap; margin: 0px auto;">
+      <svg width="16" height="16" viewBox="0 0 256 256" fill="currentColor" style="margin-right: 12px; vertical-align: middle;">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path>
+      </svg>
+      <span style="vertical-align: middle;">Stop Claude</span>
+    </button></div></body></html>
