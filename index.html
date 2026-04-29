@@ -199,6 +199,11 @@ nav.scrolled { background:rgba(28,27,20,0.98); box-shadow:0 1px 0 rgba(206,138,5
   font-size:0.78rem; color:var(--beige); font-weight:300;
   line-height:1.6; font-style:italic;
 }
+.acc-body { display:none; overflow:hidden; }
+.acc-item.open .acc-body { display:block; }
+.acc-item.open .acc-arrow { transform:rotate(180deg); }
+.acc-arrow { display:inline-block; transition:transform 0.3s; }
+
 .plato-alergenos {
   display:flex; flex-wrap:wrap; gap:0.3rem; margin-top:0.4rem;
 }
@@ -562,19 +567,16 @@ footer {
 
 /* Hero Caracol Azul partner badge */
 .hero-caracol-partner {
-  position:absolute;
-  bottom:5.5rem;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
+  position:relative;
+  margin-top:1.5rem;
   text-align:center;
   animation:fadeInUp 1.2s ease 1.4s both;
 }
 .hero-caracol-partner img {
-  height:56px;
+  height:80px;
   width:auto;
-  opacity:0.88;
-  filter:brightness(0) invert(1);
+  opacity:1;
+  filter:none;
   transition:opacity 0.3s;
 }
 .hero-caracol-partner img:hover { opacity:1; }
@@ -639,17 +641,29 @@ footer {
       <a href="#eventos" class="btn btn-teja" data-i18n="hero-btn-eventos">🥂  Eventos / Empresas</a>
     </div>
   </div>
-  <div class="scroll-hint"><span data-i18n="scroll-hint">Descubrir nuestros espacios</span><div class="scroll-line"></div>
-<div class="hero-caracol-partner">
-  <img src="img/caracol-badge.png" alt="Gin Caracol Azul · Partner oficial">
-</div>
-</div>
-</div>
+  <div class="hero-caracol-partner">
+      <img src="img/caracol-badge.png" alt="Gin Caracol Azul · Partner oficial">
+    </div>
+  </div>
 
 <!-- TRIPADVISOR BADGE -->
 <div style="background:var(--oscuro);padding:2rem 1rem;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(206,138,57,0.2);border-bottom:1px solid rgba(206,138,57,0.2);">
   <a href="https://www.tripadvisor.es/Restaurant_Review-g667782-d27512646-Reviews-El_Tinglao-Benicasim_Province_of_Castellon_Valencian_Community.html" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:1.6rem;text-decoration:none;background:rgba(52,224,161,0.07);border:1px solid rgba(52,224,161,0.25);border-radius:4px;padding:1.2rem 2rem;">
-    <!-- Owl icon + green circle badge -->
+    
+
+<div class="qr-section" id="comunidad" style="background:var(--oscuro);padding:5rem 1.5rem;text-align:center;">
+  <div style="max-width:600px;margin:0 auto;">
+    <span class="section-label reveal">Comunidad El Tinglao</span>
+    <h2 class="section-title reveal" style="margin-bottom:1rem;">Únete a nuestro<br><em>grupo de WhatsApp</em></h2>
+    <p class="section-desc reveal" style="margin-bottom:2.5rem;">Recibe en primicia nuestros eventos gastronómicos, menús especiales de temporada y ofertas exclusivas. Sin spam — solo lo bueno.</p>
+    <a href="https://wa.me/34615815441?text=Hola%2C%20me%20gustar%C3%ADa%20unirme%20al%20grupo%20de%20novedades%20de%20El%20Tinglao" target="_blank" rel="noopener" class="btn btn-wa reveal" style="font-size:1rem;padding:1.1rem 2.8rem;display:inline-flex;align-items:center;gap:0.7rem;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.558 4.122 1.533 5.853L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.499-5.186-1.371l-.372-.22-3.861.919.976-3.766-.242-.387A9.937 9.937 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"></path></svg>
+      Unirme al grupo de novedades
+    </a>
+  </div>
+</div>
+
+<!-- Owl icon + green circle badge -->
     <div style="position:relative;flex-shrink:0;">
       <svg width="62" height="62" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none">
         <circle cx="256" cy="256" r="256" fill="#34E0A1"></circle>
@@ -748,7 +762,7 @@ footer {
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-tartar">Montadito de steak tartar <small style="color:var(--verde);font-size:0.72rem"> · 4 uds</small></div>
             <div class="plato-desc" data-i18n="pd-tartar">Sobre brioche con mahonesa de soja</div>
-            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Huevos</span><span class="alergeno">Sésamo</span><span class="alergeno">Soja</span><span class="alergeno">Mostaza</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Huevos</span><span class="alergeno">Pescado</span><span class="alergeno">Sésamo</span><span class="alergeno">Soja</span><span class="alergeno">Mostaza</span></div>
           </div><div class="plato-precio">17,00 €</div>
         </div>
 
@@ -764,7 +778,7 @@ footer {
         <div class="plato">
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-croquetas">Croquetas de carrillera <small style="color:var(--verde);font-size:0.72rem"> · 6 uds</small></div>
-            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Soja</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Soja</span><span class="alergeno">Sulfitos</span></div>
           </div><div class="plato-precio">13,50 €</div>
         </div>
 
@@ -772,7 +786,7 @@ footer {
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-tempura">Tempura de verduras ecológicas y gambas</div>
             <div class="plato-desc" data-i18n="pd-tempura">Verduras ecológicas cultivadas en Benicàssim con salsas japonesas</div>
-            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Crustáceos</span><span class="alergeno">Soja</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Crustáceos</span><span class="alergeno">Lácteos</span><span class="alergeno">Soja</span></div>
           </div><div class="plato-precio">17,00 €</div>
         </div>
 
@@ -802,7 +816,7 @@ footer {
         <div class="plato">
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-sepia">Sepia del Grao con alcachofas confitadas</div>
-            <div class="plato-alergenos"><span class="alergeno">Moluscos</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Gluten</span><span class="alergeno">Lácteos</span><span class="alergeno">Moluscos</span></div>
           </div><div class="plato-precio">16,00 €</div>
         </div>
 
@@ -832,7 +846,7 @@ footer {
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-ens-cabra">Ensalada de queso de cabra</div>
             <div class="plato-desc" data-i18n="pd-ens-cabra">Lechugas, tomates, queso de cabra y vinagreta de frutos secos</div>
-            <div class="plato-alergenos"><span class="alergeno">Lácteos</span><span class="alergeno">Frutos secos</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Lácteos</span><span class="alergeno">Frutos secos</span><span class="alergeno">Sulfitos</span></div>
           </div><div class="plato-precio">14,00 €</div>
         </div>
 
@@ -840,7 +854,7 @@ footer {
           <div class="plato-left">
             <div class="plato-nombre" data-i18n="p-ens-ventresca">Ensalada de ventresca de atún</div>
             <div class="plato-desc" data-i18n="pd-ens-ventresca">Tomates, cebolla morada, aceituna de Aragón y ventresca de bonito</div>
-            <div class="plato-alergenos"><span class="alergeno">Pescado</span></div>
+            <div class="plato-alergenos"><span class="alergeno">Pescado</span><span class="alergeno">Soja</span></div>
           </div><div class="plato-precio">15,50 €</div>
         </div>
 
@@ -1433,25 +1447,13 @@ footer {
 </div>
 
 <!-- QR -->
-<div class="qr-section" id="comunidad" style="background:var(--oscuro);padding:5rem 1.5rem;text-align:center;">
-  <div style="max-width:600px;margin:0 auto;">
-    <span class="section-label reveal">Comunidad El Tinglao</span>
-    <h2 class="section-title reveal" style="margin-bottom:1rem;">Únete a nuestro<br><em>grupo de WhatsApp</em></h2>
-    <p class="section-desc reveal" style="margin-bottom:2.5rem;">Recibe en primicia nuestros eventos gastronómicos, menús especiales de temporada y ofertas exclusivas. Sin spam — solo lo bueno.</p>
-    <a href="https://wa.me/34615815441?text=Hola%2C%20me%20gustar%C3%ADa%20unirme%20al%20grupo%20de%20novedades%20de%20El%20Tinglao" target="_blank" rel="noopener" class="btn btn-wa reveal" style="font-size:1rem;padding:1.1rem 2.8rem;display:inline-flex;align-items:center;gap:0.7rem;">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"></path><path d="M12 0C5.373 0 0 5.373 0 12c0 2.129.558 4.122 1.533 5.853L0 24l6.335-1.508A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.891 0-3.659-.499-5.186-1.371l-.372-.22-3.861.919.976-3.766-.242-.387A9.937 9.937 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"></path></svg>
-      Unirme al grupo de novedades
-    </a>
-  </div>
-</div>
+
 
 <script>
 // ── ACCORDION ──────────────────────────────────────────────────────────────
 function toggleAcc(id) {
-  const item = document.getElementById('acc-' + id);
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.acc-item').forEach(el => el.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
+  var item = document.getElementById('acc-' + id);
+  if (item) { item.classList.toggle('open'); }
 }
 
 // ── SPACES GALLERY ─────────────────────────────────────────────────────────
